@@ -14,16 +14,23 @@ WORKDIR /build
 # Enable corepack for yarn
 RUN corepack enable
 
-# Copy package files for better caching
+# Copy package files for better caching (need all workspaces for hoisted deps)
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn ./.yarn
 COPY web-app/package.json ./web-app/
+COPY tauri/package.json ./tauri/
+COPY docs/package.json ./docs/
 
-# Install dependencies
-RUN yarn install --mode=skip-build
+# Install all workspace dependencies
+RUN yarn install
 
-# Copy web-app source
+# Copy web-app source, OpenAPI spec, and tauri source (web-app imports from tauri)
 COPY web-app/ ./web-app/
+COPY tauri/src/ ./tauri/src/
+COPY backend/api-files/openapi.yaml ./backend/api-files/
+
+# Generate OpenAPI types (required for builds)
+RUN yarn generate-openapi-types
 
 # Build the web app
 WORKDIR /build/web-app
