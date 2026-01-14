@@ -61,6 +61,8 @@ services:
     build:
       context: ..
       dockerfile: deployment/Dockerfile
+      args:
+        VITE_API_BASE_URL: ${PUBLIC_DOMAIN:?PUBLIC_DOMAIN is required}
     restart: unless-stopped
     environment:
       SERVER_HOST: "0.0.0.0"
