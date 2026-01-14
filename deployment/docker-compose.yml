@@ -85,6 +85,9 @@ services:
       SESSION_SECRET: "${SESSION_SECRET:?SESSION_SECRET is required}"
       DEPLOY_DOMAIN: "${PUBLIC_DOMAIN:?PUBLIC_DOMAIN is required}"
 
+      # Self-hosted: disable billing/trial restrictions
+      DISABLE_BILLING: "${DISABLE_BILLING:-true}"
+
       # Optional OAuth providers
       GOOGLE_KEY: "${GOOGLE_KEY:-}"
       GOOGLE_SECRET: "${GOOGLE_SECRET:-}"
