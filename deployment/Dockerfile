@@ -16,6 +16,7 @@ RUN corepack enable
 
 # Copy package files for better caching
 COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn ./.yarn
 COPY web-app/package.json ./web-app/
 
 # Install dependencies
